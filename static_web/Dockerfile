@@ -2,7 +2,7 @@
 FROM nginx
 
 # Copier le contenu statique dans le répertoire de travail de Nginx
-COPY ./static_web /usr/share/nginx/html
+COPY ./src /usr/share/nginx/html
 
 # Copie du fichier de configuration nginx personnalisé
 COPY nginx.conf /etc/nginx/nginx.conf
