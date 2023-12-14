@@ -11,8 +11,8 @@ Notre objectif était de construire une image Docker avec un serveur HTTP statiq
 Nous avons créé un répertoire spécifique nommé static_web dans notre référentiel GitHub pour ce serveur, dans lequel nous avons également déposé le Dockerfile et le fichier de configuration nginx.conf.
 
 ```
-docker build -t static_web:http ./static_web
-docker run -p 8080:80 static_web:http
+docker build -t static_web:latest ./static_web
+docker run -p 8080:80 static_web:latest
 http://localhost:8080
 ```
 
@@ -36,3 +36,15 @@ http://localhost:1234
 Ce fichier de configuration docker-compose.yml utilise la version 3 de Docker Compose pour déployer un service.
 Il spécifie la construction d'une image à partir du répertoire ./static_web via l'instruction build. 
 De plus, il relie le port 1234 de l'hôte au port 80 du conteneur, permettant ainsi aux requêtes entrantes sur le port 1234 de l'hôte d'être redirigées vers le port 80 du conteneur où le service sera accessible.
+
+=============================
+Pour intégrer correctement le fichier `pom.xml` à la racine du projet, veuillez suivre ces étapes. Si le fichier n'est pas déjà à la racine, assurez-vous de l'y placer. 
+Ensuite, pour afficher le projet dans les onglets dédiés à Maven sur la droite de votre environnement de développement, sélectionnez "Ajouter le projet Maven" depuis la notification située en bas à droite de votre IDE.
+
+Pour lancer Maven, naviguez vers `lifecycle` puis sélectionnez `validate`, ou bien exécutez directement `mvn validate` dans la console.
+
+Si vous observez des classes affichant un petit `J` orange, assurez-vous que Java est correctement défini comme source. Pour cela, faites un clic droit sur le dossier contenant les classes, puis sélectionnez `Mark Directory as` et choisissez `Sources Root`. 
+Si un bogue survient, assurez-vous que le port spécifié n'est pas déjà utilisé.
+
+Une fois ces étapes complétées, vous pourrez accéder à votre application via `http://localhost:8000/api/constellations`.
+
