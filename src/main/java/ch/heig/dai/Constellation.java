@@ -1,4 +1,4 @@
-package app;
+package ch.heig.dai;
 
 public class Constellation {
 
@@ -13,6 +13,6 @@ public class Constellation {
         this.name = name;
         this.latinName = name;
         this.abr = abr;
-        this.origin = origin
+        this.origin = origin;
     }
 }

@@ -1,18 +1,18 @@
-package app;
+package ch.heig.dai;
 
 import io.javalin.http.Context;
 import java.util.concurrent.ConcurrentHashMap;
 
-class ConstellationController {
+public class ConstellationController {
 
     // "Database" of constellations
     // Since the server is multi-threaded, we need to use a thread-safe data structure
     private ConcurrentHashMap<Integer, Constellation> constellations = new ConcurrentHashMap<Integer, Constellation>();
     private int lastId = 0;
 
-    public UserController() {
+    public ConstellationController() {
         // Add some constellation to the "database"
-        String name, String latinName, String abr, String origin)
+
         constellations.put(++lastId, new Constellation("L'Aigle", "Aquila/Aquilae",  "Aql", "Ptolémée"));
         constellations.put(++lastId, new Constellation("Le Burin", "Caelum/Caeli",  "Cae", "Lacaille"));
         constellations.put(++lastId, new Constellation("Le Caméléon", "Chamaeleon/Chamaeleontis",  "Cha", "Bayer"));
