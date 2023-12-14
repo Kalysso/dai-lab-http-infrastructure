@@ -1,0 +1,21 @@
+meta {
+  name: get constellations
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/api/constellations
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "name": "Nouveau nom de la constellation",
+      "latinName": "Nouveau nom latin",
+      "abr": "Nouvelle abréviation",
+      "origin": "Nouvelle origine"
+  }
+  
+}

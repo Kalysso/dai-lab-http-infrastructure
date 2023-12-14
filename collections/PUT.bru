@@ -1,0 +1,21 @@
+meta {
+  name: PUT
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{baseUrl}}/api/constellations/1
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "name": "Nouveau nom de la constellation",
+      "latinName": "Nouveau nom latin",
+      "abr": "Nouvelle abréviation",
+      "origin": "Nouvelle origine"
+  }
+  
+}

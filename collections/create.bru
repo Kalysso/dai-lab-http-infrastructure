@@ -1,0 +1,22 @@
+meta {
+  name: create
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/constellations/
+  body: json
+  auth: none
+}
+
+body:json {
+    {
+      "name": "lalaland",
+      "latinName": "hélice",
+      "abr": "lol",
+      "origin": "saturne"
+    }
+  
+  
+}

@@ -49,5 +49,8 @@ Pour lancer Maven, naviguez vers `lifecycle` puis sélectionnez `validate`, ou b
 Si vous observez des classes affichant un petit `J` orange, assurez-vous que Java est correctement défini comme source. Pour cela, faites un clic droit sur le dossier contenant les classes, puis sélectionnez `Mark Directory as` et choisissez `Sources Root`. 
 Si un bogue survient, assurez-vous que le port spécifié n'est pas déjà utilisé.
 
-Une fois ces étapes complétées, vous pourrez accéder à votre application via `http://localhost:8000/api/constellations`.
+Une fois ces étapes complétées, vous pourrez accéder à votre application via `http://localhost:8000/api/constellations`
+
+Nous avons suivi la vidéo YouTube https://www.youtube.com/watch?v=b_ctmKlEOXg pour l'utilisation de bruno.
+Les exemples sont disponibles dans le répertoire [figures](figures)
 

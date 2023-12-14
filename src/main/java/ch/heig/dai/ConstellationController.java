@@ -35,17 +35,17 @@ public class ConstellationController {
         ctx.json(constellations);
     }
 
-    public void delete(Context ctx) {
-        int id = Integer.parseInt(ctx.pathParam("id"));
-        constellations.remove(id);
-        ctx.status(204);
-    }
-
     public void update(Context ctx) {
         int id = Integer.parseInt(ctx.pathParam("id"));
         Constellation updtatedConstellation = ctx.bodyAsClass(Constellation.class);
         constellations.put(id, updtatedConstellation);
         ctx.status(200);
+    }
+
+    public void delete(Context ctx) {
+        int id = Integer.parseInt(ctx.pathParam("id"));
+        constellations.remove(id);
+        ctx.status(204);
     }
 
 }
