@@ -4,3 +4,5 @@ services:
     build: ./static_web
     ports:
       - "1234:80"
+    volumes:
+      - ./love:/usr/share/nginx/html
