@@ -11,7 +11,7 @@ public class Constellation {
 
     public Constellation(String name, String latinName, String abr, String origin) {
         this.name = name;
-        this.latinName = name;
+        this.latinName = latinName;
         this.abr = abr;
         this.origin = origin;
     }
