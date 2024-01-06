@@ -54,3 +54,31 @@ Une fois ces étapes complétées, vous pourrez accéder à votre application vi
 Nous avons suivi la vidéo YouTube https://www.youtube.com/watch?v=b_ctmKlEOXg pour l'utilisation de bruno.
 Les exemples sont disponibles dans le répertoire [figures](figures)
 
+
+------------------------------------------------------------------------------------------------------------
+
+Nous avons utilisé Docker Compose pour configurer Traefik en tant que reverse proxy pour rediriger le trafic vers nos services statique_web et reverse_proxy.
+
+### Service Web Statique
+
+Le service web a été configuré pour gérer le serveur web statique via Traefik. Voici les détails de la configuration :
+
+Construction de l'image : Utilisation du chemin ./static_web pour construire l'image.  
+Ports : expose le port 80 
+Volumes : Montage du répertoire ./serveur pour le contenu statique du serveur.  
+Déploiement : Un seul conteneur est déployé avec replicas: 1.  
+Étiquettes Traefik : Activation de Traefik pour ce service web et définition de la règle de routage Traefik pour le serveur web statique.  
+
+### Reverse Proxy
+
+Le service reverse_proxy utilise l'image Docker officielle de Traefik pour gérer le reverse proxy. Voici les détails de la configuration :
+
+Image : Utilisation de l'image Traefik v2.6.  
+Commande : Configuration de Traefik avec les options nécessaires pour l'activation du tableau de bord et la gestion des services Docker.  
+Ports : Mappage du port 80 du conteneur Traefik au port 80 de l'hôte pour recevoir le trafic entrant et du port 8080 pour accéder au dashboard de Traefik.  
+
+```
+docker-compose up -d reverse-proxy
+docker-compose up
+http://localhost:8080/dashboard
+```

@@ -2,9 +2,29 @@ version: '3'
 services:
   web:
     build: ./static_web
-    ports:
-      - "1234:80"
+    expose:
+      - "80"
     volumes:
       - ./serveur:/usr/share/nginx/htm
     deploy:
       replicas: 1
+    labels:
+      - "traefik.enable=true"  # Activation de Traefik pour ce service web
+      - "traefik.http.routers.static-web.rule=Host(`localhost`)"  # Route pour le serveur web statique
+      - "traefik.http.services.static-web.loadbalancer.server.port=80" # Port du serveur web statique
+
+  reverse_proxy:
+    image: traefik:v2.6  # Utilisation de l'image Docker de Traefik
+    command:
+      - "--api.insecure=true"  # Activation du tableau de bord (ne pas utiliser en production)
+      - "--providers.docker=true" # Activation du provider Docker
+      - "--providers.docker.exposedbydefault=false" # Ne pas exposer automatiquement les services
+      - "--entrypoints.web.address=:80" # Configuration de l'entrée sur le port 80
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "80:80" # Mapping du port 80 du conteneur Traefik au port 80 de l'hôte
+      - "8080:8080" # Accès au dashboard de Traefik
+
+
+
