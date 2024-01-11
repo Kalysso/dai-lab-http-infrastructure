@@ -32,7 +32,7 @@ Lors de cette phase de notre projet, nous avons intégré Docker Compose pour si
 ```
 docker compose build
 docker compose up
-http://localhost:1234
+http://localhost:80
 ```
 
 Ce fichier de configuration docker-compose.yml utilise la version 3 de Docker Compose pour déployer un service.
