@@ -5,7 +5,7 @@ services:
     expose:
       - "80"
     volumes:
-      - ./serveur:/usr/share/nginx/html
+      - ./serveur:/usr/share/nginx/htm
     deploy:
       replicas: 1
     labels:

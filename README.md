@@ -78,7 +78,7 @@ Commande : Configuration de Traefik avec les options nécessaires pour l'activat
 Ports : Mappage du port 80 du conteneur Traefik au port 80 de l'hôte pour recevoir le trafic entrant et du port 8080 pour accéder au dashboard de Traefik.  
 
 ```
-docker-compose up -d reverse-proxy
+docker-compose up -d reverse_proxy
 docker-compose up
 http://localhost:8080/dashboard
 ```
