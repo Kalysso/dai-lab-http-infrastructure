@@ -261,3 +261,27 @@ Pour plus de facilité, les liens sont les suivants :
 - https://localhost/api/constellations pour l'API en HTTPS
 
 ---
+## Etape optionnelle 1 : Management UI
+
+Le but de cette étape optionnelle est de déployer (ou developper) une application web pouvant monitorer et mettre à jour 
+notre infrastructure et ce dynamiquement. Nous devons donc pouvoir listes les containers qui tournent, les arrêter, 
+les démarrer et ajouter ou retirer des instances de nos services.
+
+### Portainer
+
+Nous avons décider d'utiliser [Portainer](https://www.portainer.io/), outil léger et open-source, faute de temps pour 
+développer notre propre solution.    
+
+Nous avons ajouté un nouveau service, portainer, dans notre fichier Docker compose. Avec la directive `image`, nous avons
+indiqué l'utilisation de la dernière image portainer et avec la directive `ports` nous avons exposé le port 9443, comme 
+indiqué dans la [documentation portainer](https://docs.portainer.io/start/install/server/docker/wsl). L'instruction `volumes` 
+a également été utilisée pour permettre à Portainer d'écouter les événements ainsi que pour monter le répertoire `/data`,
+permettant à Portainer de faire persister ses données.
+
+### Tests
+
+Après avoir lancé le container avec la commande `docker-compose up`, nous nous sommes rendu à l'adresse https://localhost:9443,
+afin de faire la [configuration initiale de Portainer](https://docs.portainer.io/start/install/server/setup).    
+Une fois connectés, nous pouvons commencer à gérer notre environnement Docker dynamiquement, en sélectionnant l'environnement local.
+Nous avons vérifié que nos services étaient correctement affichés et avons effectué plusieurs tests en vérifiant que les 
+changements étaient correctement appliqués.

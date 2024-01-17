@@ -41,3 +41,15 @@ services:
       - "80:80" # Port HTTP
       - "8080:8080" # Dashboard de Traefik
       - "443:443"
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    ports:
+      - 9443:9443
+    volumes:
+      - data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+
+volumes:
+  data:
