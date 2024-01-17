@@ -142,7 +142,7 @@ TODO DOCUMENTATION
 
 Cette partie du laboratoire a pour but de permettre à Traefik de détecter dynamiquement plusieurs instances de nos serveurs web.
 
-### Mise à jour du docker-compose.yaml
+### Mise à jour du docker-compose.yml
 
 Pour que plusieurs instances de chaque serveur soient lancées en même temps, il faut utiliser l'instruction `deploy.replicas`.
 Cela permet de spécifier le nombre d'instances qui doivent être démarrées.
@@ -172,7 +172,7 @@ utilisé en temps normal, mais uniquement pour notre API. De cette manière, une
 vers la même instance. Cela est particulièrement pratique pour le maintien de l'état de la session, par exemple lors de
 l'utilisation de notre API sur les constellations.
 
-### Mise à jour du docker-compose.yaml
+### Mise à jour du docker-compose.yml
 
 Afin de pouvoir utiliser les sticky sessions avec notre API, les lignes suivantes ont été ajoutées dans la configuration de l'API :
 - `"traefik.http.services.constellation_api.loadbalancer.sticky.cookie=true"`
