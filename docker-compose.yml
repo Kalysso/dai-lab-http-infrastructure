@@ -22,23 +22,17 @@ services:
       - "traefik.http.middlewares.constellation_api_stripprefix.stripprefix.prefixes=/api"
       - "traefik.http.routers.constellation_api.middlewares=constellation_api_stripprefix"
       - "traefik.http.services.constellation_api.loadbalancer.server.port=8000"
-      - "traefik.http.routers.constellation-api.entrypoints=websecure"
-      - "traefik.http.routers.constellation-api.tls=true"
+      - "traefik.http.routers.constellation_api.entrypoints=websecure"
+      - "traefik.http.routers.constellation_api.tls=true"
 
       ## Sticky session
       - "traefik.http.services.constellation_api.loadbalancer.sticky.cookie=true"
       - "traefik.http.services.constellation_api.loadbalancer.sticky.cookie.name=constellation_api"
-      #- "traefik.http.services.constellation_api.loadbalancer.sticky.cookie.secure=true" # For HTTPS
+      - "traefik.http.services.constellation_api.loadbalancer.sticky.cookie.secure=true" # For HTTPS
 
 
   reverse_proxy:
     image: traefik:v2.10  # Utilisation de l'image Docker de Traefik
-    command:
-      - "--api.insecure=true"  # Activation du tableau de bord (ne pas utiliser en production)
-      - "--providers.docker=true" # Activation du provider Docker
-      - "--providers.docker.exposedbydefault=false" # Ne pas exposer automatiquement les services
-      - "--entrypoints.web.address=:80" # Configuration de l'entrée sur le port 80
-      - "--accesslog=true"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/etc/traefik/certificates

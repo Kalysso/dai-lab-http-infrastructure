@@ -135,7 +135,14 @@ paramètres de configuration suivants :
 
 - `image` : Utilisation de l'image Traefik v2.10
 - `command` : Configuration de Traefik avec les options nécessaires pour l'activation du tableau de bord et la gestion des
-  services Docker. Le fichier de est commenté pour chacune de ces commandes, afin de ne pas devoir les expliciter toutes dans ce document.
+  services Docker.
+  ```
+      - `"--api.insecure=true"`  # Activation du tableau de bord (ne pas utiliser en production)
+      - `"--providers.docker=true"` # Activation du provider Docker
+      - "--providers.docker.exposedbydefault=false" # Ne pas exposer automatiquement les services
+      - "--entrypoints.web.address=:80" # Configuration de l'entrée sur le port 80
+      - "--accesslog=true" # Affichage des logs Traefik
+  ```
 - `volumes` : Indique à Traefik d'écouter les événements à travers le fichier docker `/var/run/docker.sock`.
 - `ports` : Mappage du port 80 du conteneur Traefik au port 80 de l'hôte pour recevoir le trafic entrant et du port 8080
   pour accéder au dashboard de Traefik.
@@ -153,7 +160,8 @@ Pour les deux services, la configuration précédente pour les ports a été ret
 
 Afin de pouvoir tester que notre reverse proxy est bien fonctionnel, nous avons lancé notre infrastructure avec la commande
 `docker compose up` et vérifié que nos services soient correctement accessibles depuis le navigateur. Le site web statique est
-disponible à l'adresse http://localhost et l'API à l'adresse http://localhost/api. Nous avons également vérifié que les
+disponible à l'adresse http://localhost et l'API à l'adresse http://localhost/api/constellations . A noter que l'API est joignable
+sans le `constellations` mais retournera le message `Not Found`, car aucune action CRUD n'est liée à cette adresse. Nous avons également vérifié que les
 routines étaient correctement configurées à l'aide du dashboard de Traefik (disponible à l'adresse http://localhost:8080/dashboard).
 
 ---
@@ -220,3 +228,32 @@ la requête aura été traitée par une autre instance du service.
 ---
 ## Etape 7 : Sécuriser Traefik avec HTTPS
 
+Cette étape a pour but de configurer Traefik afin de pouvoir utiliser HTTPS avec notre infrastructure.
+
+### Certificat et clé privée
+
+La clé privée et le certificat ont été générés à l'aide d'openssl et de la commande `openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365`.
+Ces deux fichiers ont été placés dans un dossier, avant d'indiquer dans la configuration de Traefik le volume à monter.
+
+### Nouvelle configuration Traefik
+
+Nous avons ensuite créé un fichier de configuration `traefik.yaml`, dans lequel nous avons spécifié les points d'entrée à 
+utiliser pour Docker ( deux ports différents pour le trafic HTTP et HTTPS) et la configuration TLS en indiquant le chemin 
+d'accès au certificat et à la clé. Nos deux services sont configurés pour utiliser le point d'entrée `websecure`.
+    
+Dans le fichier Docker compose, nous avons retiré les directives `command`, afin de prendre en compte la nouvelle configuration,
+dont le fichier a été mappé dans les volumes. Nous avons également ajouté de nouvelles routes pour nos services, afin 
+de pouvoir prendre en compte également les requêtes HTTPS. Le port 443 a ensuite été mappé dans la configuration du 
+reverse proxy pour exposer le port HTTPS du container.
+
+### Tests
+
+Pour valider que les requêtes HTTP et HTTPS sont correctement traitées, nous avons vérifié sur le dashboard Traefik que le
+point d'entrée HTTPS soit bien présent (port 443) puis nous avons tenté d'accéder à nos services avec les deux méthodes (HTTP et HTTPS).
+Pour plus de facilité, les liens sont les suivants :
+- http://localhost pour le site web statique en HTTP
+- https://localhost  pour le site web statique en HTTPS
+- http://localhost/api/constellations pour l'API en HTTP
+- https://localhost/api/constellations pour l'API en HTTPS
+
+---
