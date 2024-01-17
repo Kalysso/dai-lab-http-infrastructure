@@ -249,7 +249,11 @@ reverse proxy pour exposer le port HTTPS du container.
 ### Tests
 
 Pour valider que les requêtes HTTP et HTTPS sont correctement traitées, nous avons vérifié sur le dashboard Traefik que le
-point d'entrée HTTPS soit bien présent (port 443) puis nous avons tenté d'accéder à nos services avec les deux méthodes (HTTP et HTTPS).
+point d'entrée HTTPS soit bien présent (port 443) puis nous avons tenté d'accéder à nos services avec les deux méthodes 
+(HTTP et HTTPS). Nous avons également vérifié la présence des certificats sur les pages en HTTPS. Ceux-ci peuvent indiquer
+`Nom commun (CN)	  TRAEFIK DEFAULT CERT`, bien que ce ne soit pas ce qui a été configuré. Cela est potentiellement dû 
+a un problème de cache ou à des blocages au niveau du navigateur.
+    
 Pour plus de facilité, les liens sont les suivants :
 - http://localhost pour le site web statique en HTTP
 - https://localhost  pour le site web statique en HTTPS
