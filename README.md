@@ -124,18 +124,37 @@ l'API est accessible à l'adresse `http://localhost/api/constellations` à l'aid
 ---
 ## Etape 4 : Reverse proxy avec Traefik
 
-TODO DOCUMENTATION
+Cette étape a pour but de mettre en place un reverse proxy devant nos sites web dynamique et statique, de manière à ce que
+le reverse proxy reçoive toutes les connections et les redirige au bon endroit. Pour cela, nous avons utilisé Traefik,
+qui s'interface directement avec Docker pour obtenir la liste des services actifs.
 
+### Reverse Proxy
 
+Nous avons donc ajouté un nouveau service, `reverse_proxy`, dans le fichier Docker compose. Nous y avons explicité les
+paramètres de configuration suivants :
 
+- `image` : Utilisation de l'image Traefik v2.10
+- `command` : Configuration de Traefik avec les options nécessaires pour l'activation du tableau de bord et la gestion des
+  services Docker. Le fichier de est commenté pour chacune de ces commandes, afin de ne pas devoir les expliciter toutes dans ce document.
+- `volumes` : Indique à Traefik d'écouter les événements à travers le fichier docker `/var/run/docker.sock`.
+- `ports` : Mappage du port 80 du conteneur Traefik au port 80 de l'hôte pour recevoir le trafic entrant et du port 8080
+  pour accéder au dashboard de Traefik.
 
+### Modification des services
 
+La configuration de nos services à dû être modifiée afin de pouvoir prendre en compte Traefik. Pour cela, nous avons utilisé
+des directives `labels`. De cette manière, Traefik sait que les requêtes transmises sur l'hôte `localhost` sont à rediriger
+vers le site web statique et que les requêtes pour le même hôte mais avec le préfixe `/api` sont à rediriger vers l'API. Un
+middlewares va également retirer le préfixe `/api` pour pouvoir traiter correctement les requêtes pour l'API et son load balancer
+est configuré sur le port 8000.   
+Pour les deux services, la configuration précédente pour les ports a été retirée, puisque c'est maintenant Traefik qui s'en occupe.
 
+### Tests
 
-
-
-
-
+Afin de pouvoir tester que notre reverse proxy est bien fonctionnel, nous avons lancé notre infrastructure avec la commande
+`docker compose up` et vérifié que nos services soient correctement accessibles depuis le navigateur. Le site web statique est
+disponible à l'adresse http://localhost et l'API à l'adresse http://localhost/api. Nous avons également vérifié que les
+routines étaient correctement configurées à l'aide du dashboard de Traefik (disponible à l'adresse http://localhost:8080/dashboard).
 
 ---
 ## Etape 5 : Scalabilité et load balancing
