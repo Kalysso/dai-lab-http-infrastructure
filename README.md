@@ -149,12 +149,12 @@ paramètres de configuration suivants :
 
 ### Modification des services
 
-La configuration de nos services à dû être modifiée afin de pouvoir prendre en compte Traefik. Pour cela, nous avons utilisé
+La configuration de nos services a dû être modifiée afin de pouvoir prendre en compte Traefik. Pour cela, nous avons utilisé
 des directives `labels`. De cette manière, Traefik sait que les requêtes transmises sur l'hôte `localhost` sont à rediriger
 vers le site web statique et que les requêtes pour le même hôte mais avec le préfixe `/api` sont à rediriger vers l'API. Un
 middlewares va également retirer le préfixe `/api` pour pouvoir traiter correctement les requêtes pour l'API et son load balancer
 est configuré sur le port 8000.   
-Pour les deux services, la configuration précédente pour les ports a été retirée, puisque c'est maintenant Traefik qui s'en occupe.
+NB : pour les deux services, la configuration précédente pour les ports a été retirée, puisque c'est maintenant Traefik qui s'en occupe.
 
 ### Tests
 
@@ -238,7 +238,7 @@ Ces deux fichiers ont été placés dans un dossier, avant d'indiquer dans la co
 ### Nouvelle configuration Traefik
 
 Nous avons ensuite créé un fichier de configuration `traefik.yaml`, dans lequel nous avons spécifié les points d'entrée à 
-utiliser pour Docker ( deux ports différents pour le trafic HTTP et HTTPS) et la configuration TLS en indiquant le chemin 
+utiliser pour Docker (deux ports différents pour le trafic HTTP et HTTPS) et la configuration TLS en indiquant le chemin 
 d'accès au certificat et à la clé. Nos deux services sont configurés pour utiliser le point d'entrée `websecure`.
     
 Dans le fichier Docker compose, nous avons retiré les directives `command`, afin de prendre en compte la nouvelle configuration,
@@ -249,7 +249,7 @@ reverse proxy pour exposer le port HTTPS du container.
 ### Tests
 
 Pour valider que les requêtes HTTP et HTTPS sont correctement traitées, nous avons vérifié sur le dashboard Traefik que le
-point d'entrée HTTPS soit bien présent (port 443) puis nous avons tenté d'accéder à nos services avec les deux méthodes 
+point d'entrée HTTPS est bien présent (port 443) puis nous avons tenté d'accéder à nos services avec les deux méthodes 
 (HTTP et HTTPS). Nous avons également vérifié la présence des certificats sur les pages en HTTPS. Ceux-ci peuvent indiquer
 `Nom commun (CN)	  TRAEFIK DEFAULT CERT`, bien que ce ne soit pas ce qui a été configuré. Cela est potentiellement dû 
 a un problème de cache ou à des blocages au niveau du navigateur.
@@ -263,13 +263,13 @@ Pour plus de facilité, les liens sont les suivants :
 ---
 ## Etape optionnelle 1 : Management UI
 
-Le but de cette étape optionnelle est de déployer (ou developper) une application web pouvant monitorer et mettre à jour 
-notre infrastructure et ce dynamiquement. Nous devons donc pouvoir listes les containers qui tournent, les arrêter, 
+Le but de cette étape optionnelle est de déployer (ou développer) une application web pouvant monitorer et mettre à jour 
+notre infrastructure et ce, dynamiquement. Nous devons donc pouvoir lister les containers qui tournent, les arrêter, 
 les démarrer et ajouter ou retirer des instances de nos services.
 
 ### Portainer
 
-Nous avons décider d'utiliser [Portainer](https://www.portainer.io/), outil léger et open-source, faute de temps pour 
+Nous avons décidé d'utiliser [Portainer](https://www.portainer.io/), outil léger et open-source, faute de temps pour 
 développer notre propre solution.    
 
 Nous avons ajouté un nouveau service, portainer, dans notre fichier Docker compose. Avec la directive `image`, nous avons
