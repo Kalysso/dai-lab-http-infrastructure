@@ -7,8 +7,5 @@ COPY ./src /usr/share/nginx/html
 # Copie du fichier de configuration nginx personnalisé
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Exposer le port 80 pour le trafic web
-EXPOSE 80
-
 # Commande pour démarrer Nginx lorsqu'un conteneur basé sur cette image est lancé
 CMD ["nginx", "-g", "daemon off;"]
