@@ -98,7 +98,7 @@ utilisé une `ConcurrentHashMap` qui permet l'utilisation de plusieurs threads d
 #### Tests
 
 Nous avons utilisé Bruno afin de tester notre API et ses différents endpoints. Nous nous sommes basés sur la vidéo 
-YouTube suivante https://www.youtube.com/watch?v=b_ctmKlEOXg pour en apprendre son utilisation. Le répertoire [bruno_collections](api/bruno_collections) 
+YouTube [suivante](https://www.youtube.com/watch?v=b_ctmKlEOXg) pour en apprendre son utilisation. Le répertoire [bruno_collections](api/bruno_collections) 
 contient nos requêtes de tests et celles-ci sont disponibles sous forme d'images dans le répertoire [figures](api/figures).
 
 
@@ -110,15 +110,15 @@ Notre dockerfile est composé de deux parties. La première utilise `openjdk:21-
 puis build notre application. La seconde partie permet de configurer l'environnement d'exécution, de copier le fichier 
 JAR généré précédemment et de définir les commandes exécutables.
 
-#### Mise à jour du docker-compose.yaml
+#### Mise à jour du docker-compose.yml
 
-Un nouveau service a été ajouté à notre fichier `docker-compose.yaml` afin de pouvoir accéder à notre API et le monitorer avec Traefik.
+Un nouveau service a été ajouté à notre fichier `docker-compose.yml` afin de pouvoir accéder à notre API et le monitorer avec Traefik.
 Nous avons également mappé l'accès à l'API sur le port 8000 et indiqué à Traefik que le préfixe `/api` était à retirer 
 pour le traitement des requêtes.
 
 #### Utilisation de l'API
 
-Le docker peut construit avec la commande `docker compose build` puis lancé avec `docker compose up`. Une fois fait, 
+Le docker peut être construit avec la commande `docker compose build` puis lancé avec `docker compose up`. Une fois fait, 
 l'API est accessible à l'adresse `http://localhost/api/constellations` à l'aide des requêtes présentées précédemment.
 
 ---
@@ -161,7 +161,7 @@ routines étaient correctement configurées à l'aide du dashboard de Traefik (d
 
 Cette partie du laboratoire a pour but de permettre à Traefik de détecter dynamiquement plusieurs instances de nos serveurs web.
 
-### Mise à jour du docker-compose.yaml
+### Mise à jour du docker-compose.yml
 
 Pour que plusieurs instances de chaque serveur soient lancées en même temps, il faut utiliser l'instruction `deploy.replicas`.
 Cela permet de spécifier le nombre d'instances qui doivent être démarrées.
@@ -188,10 +188,10 @@ commande `docker-compose logs -f <service>` où `<service>` est le nom du servic
 
 Cette partie du laboratoire a pour but de permettre à Traefik d'utiliser des sticky sessions au lieu du classique round-robin
 utilisé en temps normal, mais uniquement pour notre API. De cette manière, une même session sera toujours redirigée
-vers la même instance. Cela est particulièrement pratique  pour le maintien de l'état de la session, par exemple lors de
+vers la même instance. Cela est particulièrement pratique pour le maintien de l'état de la session, par exemple lors de
 l'utilisation de notre API sur les constellations.
 
-### Mise à jour du docker-compose.yaml
+### Mise à jour du docker-compose.yml
 
 Afin de pouvoir utiliser les sticky sessions avec notre API, les lignes suivantes ont été ajoutées dans la configuration de l'API :
 - `"traefik.http.services.constellation_api.loadbalancer.sticky.cookie=true"`
@@ -202,7 +202,7 @@ Afin de pouvoir utiliser les sticky sessions avec notre API, les lignes suivante
 #### Site web
 
 Le but ici a été de vérifier que la configuration en round-robin n'a pas été modifiée. Nous avons ton effectué les mêmes
-tests que dans l'étape précédente, à savoir observe les logs dans la console lors de multiples requêtes au site web.
+tests que dans l'étape précédente, à savoir observer les logs dans la console lors de multiples requêtes au site web.
 
 #### API
 
@@ -214,7 +214,7 @@ d'une même instance lors de cette nouvelle session.
 
 L'utilisation de l'API avec les sticky session permet également de monter en pratique, son utilité. En effet, lorsqu'on ajoute une
 nouvelle constellation à notre "base de données", on espère pouvoir y accéder et la modifier dans les requêtes suivantes.
-Hors, avec une configuration en round-robin, il n'y aurait aucune garantie d'existence de cette nouvelle constellation puisqu'on
+Hors, avec une configuration en round-robin, il n'y aurait aucune garantie d'existence de cette nouvelle constellation puisque
 la requête aura été traitée par une autre instance du service.
 
 ---
