@@ -8,6 +8,8 @@ services:
       - "traefik.enable=true"  # Activation de Traefik pour ce service web
       - "traefik.http.routers.static-web.rule=Host(`localhost`)"  # Route pour le serveur web statique
       - "traefik.http.services.static-web.loadbalancer.server.port=80" # Port du serveur web statique
+      - "traefik.http.routers.static-web.entrypoints=websecure"
+      - "traefik.http.routers.static-web.tls=true"
       
   constellation-api:
     build: ./api
@@ -20,6 +22,8 @@ services:
       - "traefik.http.middlewares.constellation_api_stripprefix.stripprefix.prefixes=/api"
       - "traefik.http.routers.constellation_api.middlewares=constellation_api_stripprefix"
       - "traefik.http.services.constellation_api.loadbalancer.server.port=8000"
+      - "traefik.http.routers.constellation-api.entrypoints=websecure"
+      - "traefik.http.routers.constellation-api.tls=true"
 
       ## Sticky session
       - "traefik.http.services.constellation_api.loadbalancer.sticky.cookie=true"
@@ -37,6 +41,9 @@ services:
       - "--accesslog=true"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./certs:/etc/traefik/certificates
+      - ./traefik/traefik.yaml:/etc/traefik/traefik.yaml
     ports: # Mapping des ports du conteneur au ports  de l'hôte
       - "80:80" # Port HTTP
       - "8080:8080" # Dashboard de Traefik
+      - "443:443"
